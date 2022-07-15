@@ -5,13 +5,19 @@ import 'package:football/pages/component/team_list.dart';
 import 'package:football/pages/widget/custom_indicator.dart';
 
 
-class MusicPage extends StatelessWidget {
-  MusicPage({Key? key}) : super(key: key);
-  final musicC = Get.find<TeamsController>();
+class FootballPage extends StatelessWidget {
+
+  FootballPage({Key? key}) : super(key: key);
+  final teamC = Get.find<TeamsController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: content(context),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Premiere League"),
+        ),
+        body: content(context),
+      ),
     );
   }
 
@@ -30,11 +36,11 @@ class MusicPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Obx((){
-                          if(musicC.isLoading.value){
+                          if(teamC.isLoading.value){
                             return const CustomLoadingIndicator();
                           }
                           else{
-                            return TeamList();
+                            return TeamList(teamC.scrollController.value);
                           }
                         }),
                       ],
@@ -45,7 +51,6 @@ class MusicPage extends StatelessWidget {
             ),
           ),
         ),
-
       ],
     );
   }
