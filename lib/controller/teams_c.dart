@@ -8,7 +8,7 @@ class TeamsController extends GetxController with WidgetsBindingObserver{
   var modelTeams = TeamsRespon(teams: []).obs;
   var listTeams = [].obs;
   var scrollController = ScrollController().obs;
-  var listLength = 5.obs;
+  var listLength = 6.obs;
   var isLoadingLoadmore = false.obs;
   @override
   void onInit() {
@@ -30,13 +30,13 @@ class TeamsController extends GetxController with WidgetsBindingObserver{
     scrollController.value.addListener(() {
       if (scrollController.value.position.maxScrollExtent == scrollController.value.position.pixels) {
         print("scorll");
-        // for (int i = listLength.value; i < listLength.value+5; i++) {
-        //   print("index : $i");
-        //   print(listTeams.value.length);
-        //   listTeams.value.add(modelTeams.value.teams![i]);
-        // }
-        listTeams.value.add(modelTeams.value.teams![listLength.value+1]);
-        listLength.value++;
+        isLoadingLoadmore.value = true;
+        for (int i = listLength.value; i < listLength.value+5; i++) {
+          print("index : $i");
+          print(listTeams.value.length);
+          listTeams.value.add(modelTeams.value.teams![i]);
+        }
+        isLoadingLoadmore.value = false;
       }
     });
   }

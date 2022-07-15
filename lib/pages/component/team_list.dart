@@ -20,16 +20,23 @@ class TeamList extends StatelessWidget {
         return const NoData(teks: 'Team not found');
       }else{
         return Expanded(
-          child: ListView.separated(
-            controller: scrollController,
-            separatorBuilder: (context, index){
-              return const Divider(thickness: 0, color: Colors.transparent,);
-            },
-            itemCount: teamsC.listTeams.value.length,
-            padding: EdgeInsets.zero,
-            itemBuilder: (context, index){
-              return TeamCard(teamsC.listTeams.value[index]);
-            },
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.separated(
+                  controller: scrollController,
+                  separatorBuilder: (context, index){
+                    return const Divider(thickness: 0, color: Colors.transparent,);
+                  },
+                  itemCount: teamsC.listTeams.value.length,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index){
+                    return TeamCard(teamsC.listTeams.value[index]);
+                  },
+                ),
+              ),
+              teamsC.isLoadingLoadmore.value?const CircularProgressIndicator():Container(),
+            ],
           ),
         );
       }
